@@ -76,10 +76,10 @@ app.get('/safe-update',function(req,res,next){
 		for(var i in rows) {
 				workoutArray.push({'id':rows[i].id, 'name': rows[i].name, 'reps':rows[i].reps, 'weight':rows[i].weight, 'date':rows[i].date, 'unit':rows[i].unit}) 
 		}
-		context.workouts = workoutArray;
-		res.render('home',context); 
       });
     }
+	context.workouts = workoutArray;
+	res.render('home',context); 
   });
 });
 

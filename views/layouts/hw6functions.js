@@ -1,5 +1,6 @@
 var formValues = document.getElementById("values");
 formValues.addEventListener("submit", function(event){
+	event.preventDefault();
 	var req = new XMLHttpRequest();
 	var parseData = 'name=' + formValues.elements.name.value + '&reps=' + formValues.elements.reps.value + 
 			'&weight=' + formValues.elements.weight.value + '&date=' + formValues.elements.date.value +
@@ -45,7 +46,6 @@ formValues.addEventListener("submit", function(event){
 		console.log("Error in network request: " + request.statusText);
 		}
 	});
-	event.preventDefault();
 	req.send("/insert?" + parseData);
 });
 

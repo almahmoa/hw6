@@ -58,7 +58,7 @@ app.get('/update',function(req,res,next){
 
 app.get('/safe-update',function(req,res,next){
   var context = {};
-  mysql.pool.query('SELECT * FROM `workouts`', function(err, rows, result){
+  mysql.pool.query('SELECT * FROM `workouts` WHERE id=?', function(err, result){
     if(err){
       next(err);
       return;
@@ -68,18 +68,20 @@ app.get('/safe-update',function(req,res,next){
       mysql.pool.query("UPDATE `workouts` SET name=?, reps=?, weight=?, date=?, unit=? WHERE id=? ",
         [req.query.name || curVals.name, req.query.reps || curVals.reps, req.query.weight || curVals.weight, req.query.date ||
 		curVals.date, req.query.unit || curVals.unit, req.query.id], function(err, result){
-        if(err){
-          next(err);
-          return;
-        }
-		var workoutArray = []; 
-		for(var i in rows){
-			workoutArray.push({'id':rows[i].id, 'name': rows[i].name, 'reps':rows[i].reps, 
-			'weight':rows[i].weight, 'date':rows[i].date, 'unit':rows[i].unit}) 
-		}
-		context.workouts = workoutArray;
-		res.render('home',context); 
-      });
+			mysql.pool.query('SELECT * FROM `workouts`', function(err, rows, fields){
+				if(err){
+					next(err);
+					return;
+				}
+			var workoutArray = []; 
+			for(var i in rows){
+				workoutArray.push({'id':rows[i].id, 'name': rows[i].name, 'reps':rows[i].reps, 
+				'weight':rows[i].weight, 'date':rows[i].date, 'unit':rows[i].unit}) 
+			}
+			context.workouts = workoutArray;
+			res.render('home',context); 
+			)};
+		});
     }
   });
 });

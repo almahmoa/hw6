@@ -1,0 +1,42 @@
+<form id="values" action="/insert">
+  <label for="name">name:</label>
+  <br></br>
+  <input type="text" id="name" name="name" value=""></input>
+  <br></br>
+  <label for="reps">reps:</label>
+  <br></br>
+  <input type="text" id="reps" name="reps" value=""></input>
+  <br></br>
+  <label for="weight">weight:</label>
+  <br></br>
+  <input type="text" id="weight" name="weight" value=""></input>
+  <br></br>
+  <label for="date">date:</label>
+  <br></br>
+  <input type="date" id="date" name="date"></input>
+  <br></br>
+  <label>unit:</label>
+  <br></br>
+  <label for="unit">lbs</label>
+  <input type="radio" name="unit" value="1" id="unit" checked="checked" ></input>
+  <label for="unit">kg</label>
+  <input type="radio" name="unit" value="0" ></input>
+  <br></br>
+  <br></br>
+  <input type="submit" id="submit" value="Submit"></input>
+  <br></br>
+</form>
+<table id="tableID">
+  {{#each workouts}}
+  <tr>
+    <td style="border:1px solid black">{{this.id}}</td>
+    <td style="border:1px solid black">{{this.name}}</td>
+    <td style="border:1px solid black">{{this.reps}}</td>
+    <td style="border:1px solid black">{{this.weight}}</td>
+    <td style="border:1px solid black">{{this.date}}</td>
+    <td style="border:1px solid black">{{this.unit}}</td>
+    <td><a href='/update?id={{this.id}}'><input type="button" value="edit" ></input></a></td>
+    <td><input type="button" value="delete" onclick="deleteRow('tableID', this, {{this.id}})"></input></td>
+  </tr>
+  {{/each}}
+</table>

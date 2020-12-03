@@ -1,0 +1,36 @@
+<form id="values" action="/safe-update">
+  <h1>UPDATE VALUE(S)</h1>
+      <label for="name">name:</label>
+      <br></br>
+      <input type="text" id="name" name="name" value="{{workouts.name}}"></input>
+      <br></br>
+      <label for="reps">reps:</label>
+      <br></br>
+      <input type="text" id="reps" name="reps" value="{{workouts.reps}}"></input>
+      <br></br>
+      <label for="weight">weight:</label>
+      <br></br>
+      <input type="text" id="weight" name="weight" value="{{workouts.weight}}"></input>
+      <br></br>
+      <label for="date">date:</label>
+      <br></br>
+      <input type="date" id="date" name="date" value="{{workouts.date}}"></input>
+      <br></br>
+      <label>unit:</label>
+      <br></br>
+      {{#if workouts.unit}}
+        <label for="unit">lbs</label>
+        <input type="radio" name="unit" value="1" id="unit" checked="checked" ></input>
+        <label for="unit">kg</label>
+        <input type="radio" name="unit" value="0" id="unit" ></input>
+      {{else}}
+        <label for="unit">lbs</label>
+        <input type="radio" name="unit" value="1" id="unit" ></input>
+        <label for="unit">kg</label>
+        <input type="radio" name="unit" value="0" id="unit" checked="checked" ></input>
+      {{/if}}
+      <br></br>
+      <br></br>
+      <input type="submit" id="submit" value="Submit"></input>
+      <br></br>
+    </form>

@@ -1,0 +1,75 @@
+var formValues = document.getElementById("values");
+formValues.addEventListener("submit", function(event){
+	var req = new XMLHttpRequest();
+	var parseData = 'name=' + formValues.elements.name.value + '&reps=' + formValues.elements.reps.value + 
+			'&weight=' + formValues.elements.weight.value + '&date=' + formValues.elements.date.value +
+			'&unit=' + formValues.elements.unit.value;
+	req.open("GET", "/insert?" + formValues, true);
+	req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+	req.addEventListener('load',function(){
+		if(req.status >= 200 && req.status < 400){
+			var response = JSON.parse(req.responseText);
+			console.log(response);
+			var id = response.workouts;
+			var tb = document.getElementById("tableID");
+			var newRow = tb.insertRow(-1);
+
+			var idCell = document.createElement('td');
+			var nameCell = document.createElement('td');
+			var repsCell = document.createElement('td');
+			var weightCell = document.createElement('td');
+			var unitCell = document.createElement('td');
+			var editBtn = document.createElement('td');
+			var deleteBtn = document.createElement('td');
+
+			idCell.textContent = id;
+			nameCell.textContent = formValues.elements.name.value;
+			repsCell.textContent = formValues.elements.reps.value;
+			weightCell.textContent = formValues.elements.weight.value;
+			if(formValues.elements.unit.value == 1){
+				unitCell.textContent = "lbs";
+			} else {
+				unitCell.textContent = "kg";
+			}
+			editBtn.innerHTML = '<a href="/update?id=' + id + '"><input type="button" value="edit" ></input></a>';
+			deleteBtn.innerHTML = '<input type="button" value="delete" onclick="deleteRow(\'tableID\', this, ' + id + ')"></input>';
+
+			newRow.appendChild(idCell);
+			newRow.appendChild(nameCell);
+			newRow.appendChild(repsCell);
+			newRow.appendChild(weightCell);
+			newRow.appendChild(unitCell);
+			newRow.appendChild(editBtn);
+			newRow.appendChild(deleteBtn);
+		} else {
+		console.log("Error in network request: " + request.statusText);
+		}
+	});
+	event.preventDefault();
+	req.send("/insert?" + parseData);
+});
+
+function deleteRow(tableID, currentRow, id) {
+	var req = new XMLHttpRequest();
+    var table = document.getElementById(tableID);
+    var rowCount = table.rows.length;
+	req.open("GET", '/delete?id=' + id, true);
+		req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+		req.addEventListener('load',function(){
+			if(req.status >= 200 && req.status < 400){
+				var response = JSON.parse(req.responseText);
+				console.log(response);
+			} else {
+				console.log("Error in network request: " + request.statusText);
+			}
+		});
+	req.send('/delete?id=' + id);
+    for (var i = 0; i < rowCount; i++) {
+        var row = table.rows[i];
+        if (row==currentRow.parentNode.parentNode) {
+            table.deleteRow(i);
+            rowCount--;
+            i--;
+        }
+    }
+}

@@ -14,7 +14,7 @@ formValues.addEventListener("submit", function(event){
 	var parseData = 'name=' + formValues.elements.name.value + '&reps=' + formValues.elements.reps.value + 
 			'&weight=' + formValues.elements.weight.value + '&date=' + formValues.elements.date.value +
 			'&unit=' + formValues.elements.unit.value;
-	req.open("GET", "/insert?" + formValues, true);
+	req.open("GET", "/insert?" + parseData, true);
 	req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 	req.addEventListener('load',function(){
 		if(req.status >= 200 && req.status < 400){

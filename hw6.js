@@ -58,7 +58,7 @@ app.get('/update',function(req,res,next){
 
 app.get('/safe-update',function(req,res,next){
   var context = {};
-  mysql.pool.query('SELECT * FROM `workouts` WHERE id=?', function(err, result){
+  mysql.pool.query('SELECT * FROM `workouts` WHERE id=?', [req.query.id], function(err, result){
     if(err){
       next(err);
       return;

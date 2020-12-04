@@ -34,9 +34,14 @@
     <td style="border:1px solid black">{{this.reps}}</td>
     <td style="border:1px solid black">{{this.weight}}</td>
     <td style="border:1px solid black">{{this.date}}</td>
-    <td style="border:1px solid black">{{this.unit}}</td>
+    {{#if this.unit}}
+    <td style="border:1px solid black">lbs</td>
+    {{else}}
+    <td style="border:1px solid black">kg</td>
+    {{/if}}
     <td><a href='/update?id={{this.id}}'><input type="button" value="edit" ></input></a></td>
     <td><input type="button" value="delete" onclick="deleteRow('tableID', this, {{this.id}})"></input></td>
   </tr>
   {{/each}}
 </table>
+
